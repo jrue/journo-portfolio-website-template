@@ -79,6 +79,11 @@ long as you render it through the shared `work.*` macros.
 plus booleans `hasAbout`, `hasContact`, `hasWork`. Every field can be empty —
 guard sections with `{% if %}` so the template degrades gracefully.
 
+`site.jobTitle`, `site.employer` and each work's `outlet` are deliberately
+**not** rendered by any template. They exist only to feed the JSON-LD block
+that `generator/schema.js` builds and `_shared/head.njk` injects, and the
+README promises students they stay invisible. Leave them out of your markup.
+
 Section `id`s must match the nav: use `id="about"`, `id="contact"`, and let
 `work.cardSections`/`rowSections` handle the category ids.
 

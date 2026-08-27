@@ -22,6 +22,16 @@ tagline = "Multimedia journalist telling the East Bay's stories"
 
 location = "Berkeley, California"
 
+# ── For search engines only (optional) ──────────────────────
+#
+# These two lines never show up anywhere on your website. They
+# are tucked invisibly into the page so Google, and the AI tools
+# that read the web, can tell who you are and where you work.
+# Fill them in if they apply to you. If not, leave them empty.
+
+job_title = "Multimedia Journalist"     # Your role, like "Reporter" or "Photojournalist"
+employer = "Richmond Confidential"      # Where you work, intern, or freelance most
+
 # ── The look of your site ───────────────────────────────────
 #
 # Pick one template (see the README for pictures of each):
@@ -92,6 +102,10 @@ footer = ""
 #
 #  "category" groups similar work together on the page and in
 #  the menu. Give works the same category name to group them.
+#
+#  "outlet" is optional and never appears on your site. It tells
+#  search engines which publication ran the piece, which helps
+#  connect your name to your byline elsewhere on the web.
 # ============================================================
 
 # ── Published stories: give them a url and they link out ────
@@ -103,6 +117,7 @@ url = "https://example.com/your-story-link-goes-here"
 image = "media/work/bike-lanes.jpg"
 date = "March 2026"
 category = "Journalism"
+outlet = "Berkeleyside"
 
 [[work]]
 title = "The wells are running dry: a Central Valley town confronts its future"
@@ -111,6 +126,7 @@ url = "https://example.com/your-story-link-goes-here"
 image = "media/work/drought.jpg"
 date = "January 2026"
 category = "Journalism"
+outlet = "The San Francisco Chronicle"
 
 [[work]]
 title = "As grocery prices climb, more Cal students turn to the campus food pantry"
@@ -119,6 +135,7 @@ url = "https://example.com/your-story-link-goes-here"
 image = "media/work/food-bank.jpg"
 date = "November 2025"
 category = "Journalism"
+outlet = "The Daily Californian"
 
 # This one has no image on purpose — the site still handles it gracefully.
 [[work]]
@@ -127,6 +144,7 @@ description = "Student reporters cover city hall when no one else shows up. It's
 url = "https://example.com/your-story-link-goes-here"
 date = "October 2025"
 category = "Journalism"
+outlet = "Richmond Confidential"
 
 # ── A photo essay stored right here on your site ────────────
 #

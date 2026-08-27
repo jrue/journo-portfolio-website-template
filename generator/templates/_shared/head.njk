@@ -15,6 +15,12 @@
 <meta name="twitter:card" content="summary">
 {% endif %}
 
+{# Structured data (schema.org). Invisible to visitors; it tells search engines
+   and AI answer engines who this person is and what they have published. #}
+{% if jsonld %}<script type="application/ld+json">
+{{ jsonld | safe }}
+</script>{% endif %}
+
 <link rel="icon" href="{{ faviconHref }}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">

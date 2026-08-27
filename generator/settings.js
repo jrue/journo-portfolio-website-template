@@ -208,7 +208,7 @@ function normalizeWork(raw, i, mediaIndex, warnings) {
   if (typeof raw !== 'object' || raw === null) return null;
   const label = `Work item #${i + 1}` + (raw.title ? ` ("${str(raw.title)}")` : '');
 
-  const knownKeys = ['title', 'description', 'url', 'image', 'date', 'category', 'photos', 'audio', 'video', 'link', 'photo', 'thumbnail', 'summary', 'text', 'caption', 'section', 'type', 'name', 'headline'];
+  const knownKeys = ['title', 'description', 'url', 'image', 'date', 'category', 'photos', 'audio', 'video', 'link', 'photo', 'thumbnail', 'summary', 'text', 'caption', 'section', 'type', 'name', 'headline', 'outlet', 'publisher', 'publication'];
   for (const k of Object.keys(raw)) {
     if (!knownKeys.includes(k)) {
       const suggestion = closest(k, knownKeys);
@@ -222,6 +222,8 @@ function normalizeWork(raw, i, mediaIndex, warnings) {
     url: str(pick(raw, ['url', 'link'])),
     date: str(raw.date),
     category: str(pick(raw, ['category', 'section'])),
+    // Never rendered on the page — it only feeds the structured data in <head>.
+    outlet: str(pick(raw, ['outlet', 'publisher', 'publication'])),
     image: resolveMediaPath(pick(raw, ['image', 'photo', 'thumbnail']), mediaIndex, warnings, label),
     photos: [],
     audio: '',
@@ -302,6 +304,7 @@ export function loadSettings(rootDir, availableTemplates) {
     'name', 'tagline', 'bio', 'location', 'email', 'phone', 'socials', 'social',
     'banner_photo', 'banner', 'photo', 'portrait', 'resume', 'cv', 'favicon',
     'footer', 'template', 'work', 'works', 'portfolio', 'colors', 'fonts',
+    'job_title', 'jobtitle', 'job', 'role', 'employer', 'organization', 'affiliation',
     'title', 'description', 'intro', 'introduction', 'about',
   ];
   for (const k of Object.keys(raw)) {
@@ -359,6 +362,9 @@ export function loadSettings(rootDir, availableTemplates) {
   const phone = str(raw.phone);
   const location = str(raw.location);
   const tagline = str(pick(raw, ['tagline', 'description', 'intro', 'introduction']));
+  // Search-engine only: these two never appear anywhere on the rendered page.
+  const jobTitle = str(pick(raw, ['job_title', 'jobtitle', 'job', 'role']));
+  const employer = str(pick(raw, ['employer', 'organization', 'affiliation']));
   const banner = resolveMediaPath(pick(raw, ['banner_photo', 'banner', 'photo', 'portrait']), mediaIndex, warnings, 'Banner photo');
   const resume = resolveMediaPath(pick(raw, ['resume', 'cv']), mediaIndex, warnings, 'Resume');
   const favicon = resolveMediaPath(raw.favicon, mediaIndex, warnings, 'Favicon');
@@ -420,6 +426,7 @@ export function loadSettings(rootDir, availableTemplates) {
   return {
     settings: {
       name, tagline, bio, location, email, phone, socials,
+      jobTitle, employer,
       banner, resume, favicon, footer, template, colors, fonts,
       works, categories, nav,
       hasAbout, hasContact,

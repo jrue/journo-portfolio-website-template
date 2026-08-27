@@ -102,6 +102,22 @@ email = "you@example.com"               # Optional — adds a contact link
 phone = "(510) 555-0123"                # Optional
 ```
 
+### Two settings just for search engines
+
+```toml
+job_title = "Multimedia Journalist"   # Optional
+employer = "Richmond Confidential"    # Optional
+```
+
+Neither of these appears anywhere on your website. Nobody visiting your site
+will see them. They are written invisibly into the page so that Google, and
+the AI tools that now read the web, can work out who you are, what you do,
+and where you do it. See [Being found online](#being-found-online) below.
+
+Fill them in if they describe you. If you are a student without a newsroom
+job yet, it is perfectly fine to leave both empty (`""`), or to put your
+school as the employer. Do not invent one.
+
 ### Social media
 
 Paste any links between the brackets, one per line, each in quotes with a
@@ -173,6 +189,21 @@ anything you like — "Journalism," "Photojournalism," "Design," "Podcasts" —
 and spell it the same way each time. If you leave it out, the work goes under
 a general "Works" heading.
 
+**About `outlet`:** optional, and it does *not* appear on your site. Nobody
+reading the page will see it. It records which publication ran the piece, so
+search engines can connect this website to your byline wherever else it
+appears online. Add it to any work that was published somewhere:
+
+```toml
+[[work]]
+title = "Headline of your story"
+url = "https://link-to-your-published-story.com"
+outlet = "The Daily Californian"
+```
+
+Leave it out for work you published yourself, like a photo essay or a class
+project. Only name an outlet that actually ran the piece.
+
 ### A photo essay (hosted right on your site — no link needed)
 
 Clicking it opens a slideshow. Captions go after the `|` symbol and are
@@ -240,6 +271,46 @@ Tips:
   resized and compressed when the site builds.
 - The sample images in `media` belong to the demo — replace them with your
   own. (Their sources are listed in `media/SAMPLE-MEDIA-CREDITS.md`.)
+
+---
+
+## Being found online
+
+Every page this template builds includes a hidden block of
+[schema.org](https://schema.org) data, written in a format called JSON-LD.
+You never edit it and visitors never see it. It is assembled automatically
+from the settings you have already filled in.
+
+What it does is tell search engines, and the AI assistants that now answer
+questions about people, three things:
+
+1. **Who you are.** Your name, your one-line description, your photo, your
+   job title and employer if you added them.
+2. **Where else you are.** Every link in your `socials` list is published as
+   part of your identity. This is the important one. It is how a search
+   engine learns that the person behind this website, the person on that
+   LinkedIn profile, and the byline on that story are all the same person.
+3. **What you have made.** Every `[[work]]` entry, listed with its headline,
+   its date, its outlet if you gave one, and you named as the author.
+
+A few things worth knowing:
+
+- Filling in `socials` does more for this than anything else you can do.
+- Dates are converted automatically when they can be understood. "March 2026"
+  and "3/15/2026" both work. Something vague like "Fall 2025" is skipped, and
+  that is fine. It still appears normally on your site.
+- Nothing is invented. Any setting you leave blank is simply left out.
+- **Keep it honest.** This block is a claim about your identity and your
+  authorship, published in a form that machines act on. It deserves the same
+  care as a byline. Do not list an outlet that did not run your work, and do
+  not claim a job you do not hold.
+
+To see what your site is publishing, paste your web address into Google's
+[Rich Results Test](https://search.google.com/test/rich-results) or the
+[Schema Markup Validator](https://validator.schema.org). Be patient about
+results. This will not push you up the rankings overnight. What it does is
+make sure that when someone or something does look you up, it finds the right
+person.
 
 ---
 

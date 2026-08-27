@@ -14,6 +14,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import nunjucks from 'nunjucks';
 import { loadSettings, SettingsError } from './settings.js';
+import { buildJsonLd } from './schema.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -196,6 +197,7 @@ export async function build({ quiet = false } = {}) {
     fontsUrl,
     faviconHref,
     siteUrl,
+    jsonld: buildJsonLd(settings, siteUrl),
   });
   fs.writeFileSync(path.join(OUT, 'index.html'), html);
 
