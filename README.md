@@ -395,3 +395,111 @@ domain / Creative Commons — see `media/SAMPLE-MEDIA-CREDITS.md`.
 
 Made by Jeremy Sanchez Rue
 with assistance from various AI tools.
+
+---
+
+## Did you copy this template before September 2026?
+
+If you made your site with the **Use this template** button before September
+2026, your copy has an older `build-site.yml` file in it. GitHub has since
+retired the version of Node it used, and you may see a yellow warning in the
+**Actions** tab that mentions "Node.js 20 is deprecated."
+
+**First, the good news: your published site is fine.** GitHub Pages keeps
+serving the last version it built, so nothing goes offline and there's no
+emergency. The warning is about the *build* step — the part that runs when you
+edit `settings.toml`. Right now it still works. But the old settings are no
+longer maintained, so at some point in the future a build will fail and your
+future edits will stop appearing on your site.
+
+It's a five-minute fix, and you only ever have to do it once.
+
+### How to update (all in your web browser)
+
+This only applies to people who created their site prior to Sept 8, 2026.
+
+1. Go to your repository on GitHub.
+2. Click the **.github** folder, then the **workflows** folder, then
+   **build-site.yml**.
+3. Click the **pencil icon** (✏️) in the upper right to edit the file.
+4. Select **everything** in the file and delete it. (Click inside the file,
+   then press Cmd+A on Mac or Ctrl+A on Windows, then Delete.)
+5. Copy the entire block below and paste it in:
+
+```yaml
+# Builds the website from settings.toml and publishes it to GitHub Pages.
+# Students never need to edit this file.
+
+name: Build and publish website
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; newest wins.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the website files
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          # Reuse the npm download cache between runs, keyed on package-lock.json.
+          cache: npm
+
+      # "npm ci" installs exactly what package-lock.json specifies, so a build
+      # today and a build next year produce the same site. "npm install" is
+      # allowed to quietly bump versions and rewrite the lockfile.
+      - name: Install the site generator
+        run: npm ci --no-audit --no-fund
+
+      - name: Build the website from settings.toml
+        run: node generator/build.js
+
+      - name: Upload the finished site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+          # The generator writes a hidden .nojekyll file into _site, and this
+          # action skips dotfiles unless we ask for them.
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+```
+
+6. Scroll down and click the green **Commit changes** button, then
+   **Commit changes** again in the pop-up box.
+
+That's it. Head to the **Actions** tab and you should see a new run start with
+a green ✅ and no more warning. Your site rebuilds automatically.
+
+### Did something go wrong?
+
+If you see a red ❌ after doing this, the most likely cause is that a stray
+character got left behind in step 4. Open the file again, make sure the very
+first line is `# Builds the website from settings.toml`, delete everything one
+more time, and re-paste. Indentation matters in this kind of file, so paste it
+exactly as-is rather than retyping it.
